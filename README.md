@@ -22,3 +22,6 @@ the server will be running on localhost:8000
 
 The API has all of the models for the GymBuddy App, as described in the design document.
 The current features include, CRUD functions for each model, however, there is no logic between components.
+
+# /admin/
+The admin page will let you create data for testing. All data is currently stored in the db.sqlite3 file. 
