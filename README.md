@@ -31,10 +31,11 @@ in the terminal:
 ```
 python manage.py createsuperuser
 ```
+
 follow the instructions to create your user (username, email, password, confirm password).
 
 http://localhost:8000/admin/
-```
+
 ![basic accounts page](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site/admin_home.png)
 
 ### /accounts/
