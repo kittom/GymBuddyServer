@@ -4,7 +4,7 @@ A computer vision and social media fitness app, for checking the quality of exer
 ## Setup
 create a venv. 
 ```
-python3 -m venv /path/to/new/virtual/environment
+python -m venv /path/to/new/virtual/environment
 ```
 Select this interpreter and install django, and the django rest framework.
 ```
@@ -25,7 +25,14 @@ The current features include, CRUD functions for each model, however, there is n
 
 ### /admin/
 The admin page will let you create data for testing. All data is currently stored in the db.sqlite3 file. 
+before you can acess this, you need to use the createsuperuser function in the manage.py code in django.
+
+in the terminal:
 ```
+python manage.py createsuperuser
+```
+follow the instructions to create your user (username, email, password, confirm password).
+
 http://localhost:8000/admin/
 ```
 ![basic accounts page](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site/admin_home.png)
