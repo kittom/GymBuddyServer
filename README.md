@@ -16,3 +16,9 @@ With these installed, run the server through the manage.py file.
 ```
 python manage.py runserver
 ```
+the server will be running on localhost:8000
+
+## API
+
+The API has all of the models for the GymBuddy App, as described in the design document.
+The current features include, CRUD functions for each model, however, there is no logic between components.
