@@ -25,3 +25,10 @@ The current features include, CRUD functions for each model, however, there is n
 
 ### /admin/
 The admin page will let you create data for testing. All data is currently stored in the db.sqlite3 file. 
+```
+http://localhost:8000/admin/
+```
+![basic accounts page](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site/admin_home.png)
+
+### /accounts/
+The accounts accesses all the users in the database. you can either return a list of all of them with /accounts or a specific entry with /accounts/1 which will return the first account.
