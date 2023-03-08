@@ -1,6 +1,7 @@
+import os
 from django.db import models
 from django.db.models.functions import Lower
-
+from django.core.validators import FileExtensionValidator
 
 # account model with name, username, password, email
 class Account(models.Model):
@@ -19,18 +20,27 @@ class Account(models.Model):
         return self.username
 
 # Exercises with type, datetime, accountID, filepath
+
+def get_file_path(instance, filename):
+    account_id = instance.account.id
+    file_extension = os.path.splitext(filename)[1]
+    timestamp = instance.datetime
+    return f"videos/{account_id}/{instance.type}_{timestamp}{file_extension}"
+
 class Exercise(models.Model):
     class Meta:
         db_table = "exercises"
     type = models.CharField(max_length=30)
     datetime = models.DateTimeField()
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    filepath = models.CharField(max_length=50)
+    file = models.FileField(upload_to=get_file_path, 
+                            null=True, 
+                            name="file", 
+                            validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
+
     def __str__(self):
-        return self.filepath
-    
-    def save(self, *args, **kwargs):
-        super().save(*args,**kwargs)
+        return self.file.path
+
 
 # Workouts with ID, accountID, startTime, endTime
 class Workout(models.Model):
