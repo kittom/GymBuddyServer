@@ -1,5 +1,5 @@
-from .models import Account, Exercise
-from .serializers import AccountSerializer, ExerciseSerializer
+from .models import Account, Exercise, Workout
+from .serializers import AccountSerializer, ExerciseSerializer, WorkoutSerializer
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -43,3 +43,21 @@ class ExerciseList(generics.ListAPIView):
 #     serializer_class 
 
 
+class WorkoutCreate(generics.CreateAPIView):
+    queryset = Workout.objects.all()
+    serializer_class = WorkoutSerializer
+class WorkoutList(generics.ListAPIView):
+    
+    serializer_class = WorkoutSerializer
+
+    def get_queryset(self):
+        account_id = self.kwargs['account']
+        return Workout.objects.filter(account=account_id)
+
+class ExerciseByWorkoutView(generics.ListAPIView):
+    serializer_class = ExerciseSerializer
+
+    def get_queryset(self):
+        workout_id = self.kwargs['workout_id']
+        workout = Workout.objects.get(id=workout_id)
+        return Exercise.objects.filter(account=workout.account, datetime__range=(workout.startTime, workout.endTime))

@@ -8,18 +8,20 @@ class Account(models.Model):
     class Meta:
         db_table = "accounts"
         constraints = [
-        models.UniqueConstraint(Lower('username').desc(), name='unique_username'),
-        models.UniqueConstraint(Lower('email').desc(), name='unique_email')
+            models.UniqueConstraint(Lower('username').desc(), name='unique_username'),
+            models.UniqueConstraint(Lower('email').desc(), name='unique_email')
         ]
+    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     username = models.CharField(max_length=30)
     password = models.CharField(max_length=30)
     email = models.CharField(max_length=30)
+    
     def __str__(self):
-        return self.username
+        return f"{self.id} : {self.username}"
 
-# Exercises with type, datetime, accountID, filepath
+# Exercises with type, datetime, accountID, video_filepath, csv_filepath
 
 def get_file_path(instance, filename):
     account_id = instance.account.id
@@ -37,6 +39,16 @@ class Exercise(models.Model):
                             null=True, 
                             name="file", 
                             validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
+    csv_file = models.FileField(upload_to=get_file_path, 
+                                null=True, 
+                                name="csv_file", 
+                                validators=[FileExtensionValidator(allowed_extensions=['csv'])])
+    QUALITY_CHOICES = [
+        ('unchecked', 'Unchecked'),
+        ('good', 'Good'),
+        ('bad', 'Bad'),
+    ]
+    quality = models.CharField(max_length=10, choices=QUALITY_CHOICES, default='unchecked')
 
     def __str__(self):
         return self.file.path

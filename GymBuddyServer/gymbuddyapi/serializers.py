@@ -25,12 +25,12 @@ class ExerciseSerializer(serializers.ModelSerializer):
     account = serializers.PrimaryKeyRelatedField(queryset=Account.objects.all())
     file = serializers.FileField()
 
-# class WorkoutSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Workout
-#         fields = ['id', 'account', 'startTime', 'endTime']
+class WorkoutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Workout
+        fields = ['id', 'account', 'startTime', 'endTime']
 
-#     id = serializers.IntegerField(read_only=True)
-#     account = serializers.PrimaryKeyRelatedField(queryset=Account.objects.all())
-#     startTime = serializers.DateTimeField()
-#     endTime = serializers.DateTimeField()
+    id = serializers.IntegerField(read_only=True)
+    account = serializers.PrimaryKeyRelatedField(queryset=Account.objects.all())
+    startTime = serializers.DateTimeField()
+    endTime = serializers.DateTimeField()
