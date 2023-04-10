@@ -26,10 +26,12 @@ class ExerciseView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = ExerciseSerializer(data=request.data)
         if serializer.is_valid():
-            file = serializer.validated_data['file']
-            serializer.save(file=file)
+            video_file = serializer.validated_data['video_file']
+            csv_file= serializer.validated_data['csv_file']
+            serializer.save(video_file=video_file, csv_file=csv_file)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 class ExerciseList(generics.ListAPIView):
     
     serializer_class = ExerciseSerializer

@@ -17,13 +17,14 @@ class AccountSerializer(serializers.ModelSerializer):
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
         model = Exercise
-        fields = ['id', 'type', 'datetime', 'account', 'file']
+        fields = ['id', 'exercise_type', 'datetime', 'account', 'video_file', 'csv_file']
     
     id = serializers.IntegerField(read_only=True)
-    type = serializers.CharField()
+    exercise_type = serializers.CharField()
     datetime = serializers.DateTimeField()
     account = serializers.PrimaryKeyRelatedField(queryset=Account.objects.all())
-    file = serializers.FileField()
+    video_file = serializers.FileField()
+    csv_file = serializers.FileField()
 
 class WorkoutSerializer(serializers.ModelSerializer):
     class Meta:

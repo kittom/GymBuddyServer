@@ -23,23 +23,40 @@ class Account(models.Model):
 
 # Exercises with type, datetime, accountID, video_filepath, csv_filepath
 
-def get_file_path(instance, filename):
+def get_video_file_path(instance, filename):
     account_id = instance.account.id
+    timestamp = instance.datetime.strftime('%Y-%m-%d_%H-%M-%S')
+    exercise_type = instance.exercise_type
     file_extension = os.path.splitext(filename)[1]
-    timestamp = instance.datetime
-    return f"videos/{account_id}/{instance.type}_{timestamp}{file_extension}"
+    return f"exercises/{account_id}/{exercise_type}/{timestamp}/video{file_extension}"
 
+def get_csv_file_path(instance, filename):
+    account_id = instance.account.id
+    timestamp = instance.datetime.strftime('%Y-%m-%d_%H-%M-%S')
+    exercise_type = instance.exercise_type
+    file_extension = os.path.splitext(filename)[1]
+    return f"exercises/{account_id}/{exercise_type}/{timestamp}/data{file_extension}"
+
+# Exercises with id, type, datetime, account, video_file, csv_file
 class Exercise(models.Model):
     class Meta:
         db_table = "exercises"
-    type = models.CharField(max_length=30)
+    
+    id = models.AutoField(primary_key=True)
+    TYPE_CHOICES = [
+        ('squat', 'Squat'),
+        ('bicep_curl', 'Bicep Curl'),
+        ('shoulder_press', 'Shoulder Press'),
+    ]
+    exercise_type  = models.CharField(max_length=30, choices=TYPE_CHOICES)
     datetime = models.DateTimeField()
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    file = models.FileField(upload_to=get_file_path, 
+    video_file = models.FileField(upload_to=get_video_file_path, 
                             null=True, 
-                            name="file", 
+                            name="video_file", 
                             validators=[FileExtensionValidator(allowed_extensions=['MOV','avi','mp4','webm','mkv'])])
-    csv_file = models.FileField(upload_to=get_file_path, 
+    
+    csv_file = models.FileField(upload_to=get_csv_file_path, 
                                 null=True, 
                                 name="csv_file", 
                                 validators=[FileExtensionValidator(allowed_extensions=['csv'])])
@@ -51,13 +68,14 @@ class Exercise(models.Model):
     quality = models.CharField(max_length=10, choices=QUALITY_CHOICES, default='unchecked')
 
     def __str__(self):
-        return self.file.path
+        return f'{id} : {self.account_id}/{self.exercise_type}/{self.timestamp}'
 
 
 # Workouts with ID, accountID, startTime, endTime
 class Workout(models.Model):
     class Meta:
         db_table = "workouts"
+    id = models.AutoField(primary_key=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     startTime = models.DateTimeField()
     endTime = models.DateTimeField()
