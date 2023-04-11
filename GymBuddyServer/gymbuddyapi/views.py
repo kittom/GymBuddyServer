@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from datetime import datetime
 from .serializers import ExerciseSerializer
-
+import asyncio
 
 class AccountList(generics.ListCreateAPIView):
     queryset = Account.objects.all()
@@ -29,6 +29,7 @@ class ExerciseView(APIView):
             video_file = serializer.validated_data['video_file']
             csv_file= serializer.validated_data['csv_file']
             serializer.save(video_file=video_file, csv_file=csv_file)
+            
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     

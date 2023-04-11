@@ -8,7 +8,6 @@ create a venv.
 
 ```bash
 python -m venv /path/to/new/virtual/environment
-source /path/to/new/virtual/environment
 ```
 
 Select this interpreter and install django, and the django rest framework.
@@ -17,7 +16,6 @@ Select this interpreter and install django, and the django rest framework.
 pip install django
 pip install djangorestframework
 ```
-
 
 With these installed, run the server through the manage.py file.
 
