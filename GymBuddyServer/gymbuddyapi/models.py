@@ -79,6 +79,8 @@ class Workout(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
     startTime = models.DateTimeField()
     endTime = models.DateTimeField()
+    title = models.CharField(50)
+    description = models.CharField(500)
     def __str__(self):
         return f"User {self.account}'s workout started at {self.startTime}, and ended at {self.endTime}."
 
