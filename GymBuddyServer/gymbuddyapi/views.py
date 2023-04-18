@@ -57,6 +57,9 @@ class WorkoutList(generics.ListAPIView):
         account_id = self.kwargs['account']
         return Workout.objects.filter(account=account_id)
 
+class WorkoutDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Workout.objects.all()
+    serializer_class = WorkoutSerializer
 class ExerciseByWorkoutView(generics.ListAPIView):
     serializer_class = ExerciseSerializer
 
