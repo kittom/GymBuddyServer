@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Account, Exercise, Workout, Post, Friend, Like
+from .models import Account, Exercise, Workout
+
 
 class AccountSerializer(serializers.ModelSerializer):
     # exercises = serializers.PrimaryKeyRelatedField(many=True, queryset=Exercise.objects.all())
@@ -12,11 +13,6 @@ class AccountSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField()
     password = serializers.CharField()
     email = serializers.CharField()
-
-class AccountListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Account
-        fields = ['id', 'first_name', 'last_name', 'username']
 
 class ExerciseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,49 +27,12 @@ class ExerciseSerializer(serializers.ModelSerializer):
     video_file = serializers.FileField()
     csv_file = serializers.FileField()
 
-class ExerciseQualityUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Exercise
-        fields = ['quality']
-
 class WorkoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = Workout
-        fields = ['id', 'account', 'startTime', 'endTime', 'title', 'description']
+        fields = ['id', 'account', 'startTime', 'endTime']
 
     id = serializers.IntegerField(read_only=True)
     account = serializers.PrimaryKeyRelatedField(queryset=Account.objects.all())
     startTime = serializers.DateTimeField()
     endTime = serializers.DateTimeField()
-    title = serializers.CharField()
-    description = serializers.CharField(required=False, allow_blank=True)
-
-class FriendSerializer(serializers.ModelSerializer):
-    account1 = AccountSerializer()
-    account2 = AccountSerializer()
-
-    class Meta:
-        model = Friend
-        fields = ['account1', 'account2', 'accepted']
-
-class FriendGetSerializer(serializers.ModelSerializer):
-    account = AccountSerializer(read_only=True)
-    class Meta:
-        model = Friend
-        fields = ['account']
-
-class PostSerializer(serializers.ModelSerializer):
-    account = AccountSerializer()
-    workout = WorkoutSerializer()
-
-    class Meta:
-        model = Post
-        fields = ['account', 'workout', 'post_datetime', 'title', 'description']
-
-class LikeSerializer(serializers.ModelSerializer):
-    account = AccountSerializer()
-    post = PostSerializer()
-
-    class Meta:
-        model = Like
-        fields = ['account', 'post']
