@@ -4,6 +4,8 @@ A computer vision and social media fitness app, for checking the quality of exer
 
 ## Setup
 
+First, make sure you have Python installed on your machine.
+
 Create a new virtual environment.
 
 ```bash
@@ -12,34 +14,45 @@ python -m venv venv
 
 Activate your new virtual environment
 On Mac and linux:
+
 ```bash
 source venv/bin/activate
 ```
 
 install the packages
+
 ```bash
 pip install -r requirements.txt
 ```
 
-update the settings.py in the gym 
+update the current_ip in the settings.py file located in the GymBuddyServer/GymBuddyServer/ directory to include your current IP Address.
+
+```python
+current_ip = "" # insert current ip address
+```
 
 Select this interpreter and install django, and the django rest framework.
 
 ```bash
-pip install django
-pip install djangorestframework
+pip install -r requirements.txt
 ```
 
 With these installed, run the server through the manage.py file.
 
 ```bash
-python manage.py runserver
+cd GymBuddyServer/
+python3 manage.py runserver 0.0.0.0:8000
 ```
 
-the server will be running on localhost:8000
+the server will be running on your local server and should allow all devices on your wifi to connect to it.
 
-![basic accounts page](https://developer.mozilla.org/en-US/docs/Learn/Server-side/Django/Admin_site/admin_home.png)
+## admin
 
-### /accounts/
+To enable administrative features on the server, you need to create a superuser. To do this, you can use the manage.py file.
 
-The accounts accesses all the users in the database. you can either return a list of all of them with /accounts or a specific entry with /accounts/1 which will return the first account.
+```bash
+python3 manage.py createsuperuser
+```
+
+with this you can go into your browser and access the server at "http://{your_ip_address}:8000/admin/"
+Type in your superuser details and you can view all objects stored in the server and on the database

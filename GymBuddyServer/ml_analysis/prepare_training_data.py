@@ -1,13 +1,13 @@
-from FeatureLoader import get_features
+from .FeatureLoader import get_features
 import numpy as np
 
-def uniform_sampling(frames, num_samples, type):
+def uniform_sampling(frames, num_samples, type, model):
     sampled_frames = []
     total_frames = len(frames)
     step = total_frames // num_samples
 
     for i in range(0, total_frames, step):
-        sampled_frames.append(get_features(frames[i], type))
+        sampled_frames.append(get_features(frames[i], type, model))
 
     sampled_array = np.array(sampled_frames[:num_samples])
     return sampled_array.flatten()
