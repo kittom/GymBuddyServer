@@ -16,6 +16,14 @@ class DBHandler:
             results = cursor.fetchall()
         return results
 
+    def get_specific_exercise(self, account_id, exercise_type, timestamp):
+        with self.get_connection() as conn:
+            cursor = conn.cursor()
+            query = "SELECT * FROM Exercises WHERE account_id = ? AND exercise_type = ? AND datetime = ? AND quality = 'unchecked'"
+            cursor.execute(query, (account_id, exercise_type, timestamp))
+            result = cursor.fetchone()
+        return result
+
 class CSVHandler:
     def __init__(self, csv_file):
         self.csv_file = csv_file
