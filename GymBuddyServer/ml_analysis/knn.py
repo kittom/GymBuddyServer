@@ -1,7 +1,7 @@
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report, confusion_matrix
-from trainingdataloader import training_data
+# from trainingdataloader import training_data
 import numpy as np
 
 class KNNClassifier:
@@ -23,7 +23,9 @@ class KNNClassifier:
         return self.y_pred
 
     def predict(self, exercise):
-        self.result = self.knn.predict(exercise.features)
+
+        result = self.knn.predict([exercise[0].features])
+        return result
 
     def evaluate(self):
         if self.y_pred is None:
@@ -32,7 +34,8 @@ class KNNClassifier:
         print(confusion_matrix(self.y_test, self.y_pred))
 
 if __name__ == "__main__":
-    knn_classifier = KNNClassifier(training_data)
-    knn_classifier.train()
-    knn_classifier.test()
-    knn_classifier.evaluate()
+    # knn_classifier = KNNClassifier(training_data)
+    # knn_classifier.train()
+    # knn_classifier.test()
+    # knn_classifier.evaluate()
+    pass
