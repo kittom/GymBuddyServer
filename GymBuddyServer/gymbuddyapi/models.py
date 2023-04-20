@@ -28,7 +28,7 @@ class Account(models.Model):
         return f"{self.id} : {self.username}"
     
     def get_friends(self):
-        friends = Friend.objects.filter(Q(account1=self, accepted=True) or Q(account2=self, accepted=True))
+        friends = Friend.objects.filter(Q(account1=self, accepted=True) | Q(account2=self, accepted=True))
         friend_list = []
         for friend in friends:
             if friend.account1.id == self.id:
