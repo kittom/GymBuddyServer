@@ -31,11 +31,6 @@ update the current_ip in the settings.py file located in the GymBuddyServer/GymB
 current_ip = "" # insert current ip address
 ```
 
-Select this interpreter and install django, and the django rest framework.
-
-```bash
-pip install -r requirements.txt
-```
 
 With these installed, run the server through the manage.py file.
 
